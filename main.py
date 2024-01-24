@@ -1,11 +1,22 @@
 import time
 import random
+import os
 
-def main():
+def createLetterList(word):
+        char_list = []
+        for c in word:
+            char_list.append(c)
+        return char_list
+    
+def Main():
+    # Setting variables for new round
     active_guess = "_ _ _ _ _"
-    word = ""
+    active_guess = active_guess.split(" ")
     win = False
     strikes = 0
+    guesses = []
+
+    # Reading from words.txt and setting mystery word
     print("Generating word...")
     with open('words.txt', 'r') as file:
         data = file.read()
@@ -13,12 +24,33 @@ def main():
     word = word_list[random.randint(0,len(word_list))]
     time.sleep(2.5)
 
-    while not win and strikes != 3:
-        print(f"{active_guess}\nword: {word} \nstrikes: {strikes}")
+    # Starting Game Loop
+    while not win and strikes != 5:
+        os.system('cls')
+        print(f"{active_guess}\nstrikes: {strikes} \nguesses: {guesses}")
         guess = input()
-        if guess == word:
-            win = True
-            print("Yes!")
-        strikes += 1
+        if len(guess) == 5:
+            if guess == word:
+                win = True
+                print(f"\n\n*****\You\nWin!\n*****")
+                input()
+                
+            # Checking per character 
+            guessCheck = createLetterList(guess)
+            for i in range(0, len(guessCheck)):
+                if guessCheck[i] == word[i]:
+                    active_guess[i] = word[i]
+                            
+            # Updating strikes and guesses list
+            strikes += 1
+            guesses.append(guess)
+            os.system('cls')
+        else:
+            os.system('cls')
+            print("Guess should be 5 letters!")
+            time.sleep(1.5)
+    print('Loser...')
+            
 
-main()
+os.system('cls')
+Main()
