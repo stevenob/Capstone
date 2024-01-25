@@ -49,7 +49,7 @@ def Main():
             os.system('cls')
             print("Guess should be 5 letters!")
             time.sleep(1.5)
-    print('Loser...')
+    print(f'Loser...\nWord: {word}')
             
 
 os.system('cls')
